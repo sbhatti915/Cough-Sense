@@ -150,8 +150,8 @@ def evaluate_model(model, test_loader, device, num_classes, path_to_best_model):
     plt.ylabel("Precision")
     plt.legend()
     plt.grid()
-    plt.show()
     plt.savefig('/home/sameer/Cough-Sense/figures/results.png')
+    plt.show()
 
     # Print AUPRC scores
     for i, ap in enumerate(average_precisions):
