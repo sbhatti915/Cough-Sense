@@ -2,7 +2,7 @@ import torch
 import torch.optim as optim
 import torch.nn as nn
 from torch.utils.data import DataLoader
-from sklearn.metrics import precision_recall_curve, average_precision_score, accuracy_score
+from sklearn.metrics import precision_recall_curve, average_precision_score, accuracy_score, confusion_matrix
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -150,10 +150,36 @@ def evaluate_model(model, test_loader, device, num_classes, path_to_best_model):
     plt.ylabel("Precision")
     plt.legend()
     plt.grid()
-    plt.savefig('/home/sameer/Cough-Sense/figures/results.png')
+    plt.savefig('/home/sameer/Cough-Sense/figures/results1.png')
     plt.show()
 
     # Print AUPRC scores
     for i, ap in enumerate(average_precisions):
         print(f"AUPRC for Class {i}: {ap:.4f}")
     print(f"Mean AUPRC: {np.mean(average_precisions):.4f}")
+
+    # Calculate confusion matrix
+    cm = confusion_matrix(all_labels, all_preds, labels=['neither', 'viral', 'bacterial'])
+    print("Confusion Matrix:")
+    print(cm)
+
+    # Plot confusion matrix without seaborn
+    plt.figure(figsize=(10, 8))
+    plt.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
+    plt.title("Confusion Matrix")
+    plt.colorbar()
+    tick_marks = np.arange(num_classes)
+    plt.xticks(tick_marks, tick_marks)
+    plt.yticks(tick_marks, tick_marks)
+
+    for i in range(cm.shape[0]):
+        for j in range(cm.shape[1]):
+            plt.text(j, i, format(cm[i, j], 'd'),
+                     horizontalalignment="center",
+                     color="white" if cm[i, j] > cm.max() / 2. else "black")
+
+    plt.ylabel("True Labels")
+    plt.xlabel("Predicted Labels")
+    plt.tight_layout()
+    plt.savefig('/home/sameer/Cough-Sense/figures/confusion_matrix.png')
+    plt.show()

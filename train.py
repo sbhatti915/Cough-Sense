@@ -49,13 +49,11 @@ test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
 
 # Model and training setup
-num_classes = 3  # Adjust to match the number of classes
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = get_resnet18_model(num_classes)
 criterion = nn.CrossEntropyLoss()  # For multi-class classification
 optimizer = optim.Adam(model.parameters(), lr=learning_rate)
-num_epochs = 10
-path_to_model_save = '/home/sameer/Cough-Sense/saved_models/model.pt'
+path_to_model_save = '/home/sameer/Cough-Sense/saved_models/model1.pt'
 
 # Train the model
 trained_model = train_model(model, train_loader, val_loader, criterion, optimizer, num_epochs, device, path_to_model_save)
