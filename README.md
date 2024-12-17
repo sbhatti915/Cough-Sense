@@ -15,7 +15,7 @@ Use the `truncate_covid.py` file to reduce all covid audio lengths down to 1 sec
 ## Usage
 For training, adjust file paths in `train.py`. 
 
-For inference, adjust file paths in `inference.py` for model and audio sample.
+For inference, adjust file paths in `inference.py` for model and audio sample. Each of the audio samples have correct ouputs from the model.
 
 ## Results
 
